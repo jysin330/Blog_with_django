@@ -10,6 +10,7 @@ def home(request):
     # taking in a request(Django sends request)
     # return HTML response(We pick to return the response)
     number = random.randint(1,4)
+    print(id)
     # from databases--->
     article_obj = Article.objects.get(id = number)
     article_list = Article.objects.all()
