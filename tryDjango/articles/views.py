@@ -1,7 +1,8 @@
 from django.shortcuts import render
-
+from django.contrib.auth.decorators import login_required
 # Create your views here.
 from .models import Article
+
 def article_search_view(request):
     query_dict= request.GET #this is dictonary
     # query = query_dict.get('q') # <input type="text" name="q"/>
@@ -21,7 +22,8 @@ def article_search_view(request):
     return render(request, 'articles/search.html', context = context)
     
     
-    
+
+@login_required    
 def article_create_view(request):
     # query_dict = request.POST
     # print(query_dict)
