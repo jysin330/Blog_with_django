@@ -4,7 +4,7 @@ from django.db import models
 
 
 class Article(models.Model):
-    title = models.CharField(max_length=80)
+    title = models.CharField(max_length= 70)
     content = models.TextField()
     timestamp =models.DateTimeField(auto_now_add=True)
-    update = models.DateTimeField(auto_now=True)
+    updated = models.DateTimeField(auto_now=True)

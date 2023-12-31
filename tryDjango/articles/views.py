@@ -36,6 +36,7 @@ def article_create_view(request):
     if form.is_valid():
             article_object = form.save()
             context['form'] = ArticleForm()
+           
             # title = form.cleaned_data.get("title")
             # content = form.cleaned_data.get("content")
             # print(title, content)
