@@ -16,7 +16,11 @@ class Article(models.Model):
     def save(self,*args, **kwargs):
         # obj = Article.objects.get(id=1)
         # set something
-        self.slug = slugify(self.title)
+        if self.slug is None:
+            self.slug = slugify(self.title)
         super().save(*args, **kwargs)
+        # if self.slug is None:
+        #     self.slug = slugify(self.title)
+        #     self.save()
         # obj.save()
         # do another something
