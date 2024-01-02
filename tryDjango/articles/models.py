@@ -1,4 +1,5 @@
 from django.db import models
+from django.db.models.signals import pre_save, post_save
 # from django.utils import timezone
 from django.utils.text import slugify
 # Create your models here.
@@ -24,3 +25,15 @@ class Article(models.Model):
         #     self.save()
         # obj.save()
         # do another something
+
+def article_presave(*args,**kwargs):
+    print("pre save: ")
+    print(args, kwargs)
+
+pre_save.connect(article_presave, sender= Article)
+
+def article_postsave(*args,**kwargs):
+    print("post save: ")
+    print(args, kwargs)
+
+post_save.connect(article_postsave, sender= Article)
