@@ -26,11 +26,21 @@ class Article(models.Model):
         # obj.save()
         # do another something
 
+def slugify_instance_title(instance, save= False):
+    slug = slugify(instance.title)
+    qs = Article.objects.filter(slug = slug).exclude(id =instance.id)
+    if qs.exists():
+        slug = f"{slug} - {qs.count()+1}"
+    instance.slug = slug
+    if save:
+        instance.save()
+
 def article_presave(sender,instance, *args,**kwargs):
     print("pre save: ")
     # print(sender,instance)
     if instance.slug is None:
-        instance.slug = slugify(instance.title)
+        # instance.slug = slugify(instance.title)
+        slugify_instance_title(instance, save= False)
     
     # instance.slug = slugify(instance.title)
 
@@ -40,7 +50,8 @@ def article_postsave(sender, instance, created, *args,**kwargs):
     print("post save: ")
     # print(args, kwargs)
     if created:
-        instance.slug ="this is the slug"
-        instance.save()
+        slugify_instance_title(instance, save= True)
+        # instance.slug ="this is the slug"
+        # instance.save()
 
 post_save.connect(article_postsave, sender= Article)
