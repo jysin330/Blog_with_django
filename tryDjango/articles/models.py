@@ -17,8 +17,8 @@ class Article(models.Model):
     def save(self,*args, **kwargs):
         # obj = Article.objects.get(id=1)
         # set something
-        if self.slug is None:
-            self.slug = slugify(self.title)
+        # if self.slug is None:
+        #     self.slug = slugify(self.title)
         super().save(*args, **kwargs)
         # if self.slug is None:
         #     self.slug = slugify(self.title)
@@ -26,14 +26,21 @@ class Article(models.Model):
         # obj.save()
         # do another something
 
-def article_presave(*args,**kwargs):
+def article_presave(sender,instance, *args,**kwargs):
     print("pre save: ")
-    print(args, kwargs)
+    # print(sender,instance)
+    if instance.slug is None:
+        instance.slug = slugify(instance.title)
+    
+    # instance.slug = slugify(instance.title)
 
 pre_save.connect(article_presave, sender= Article)
 
-def article_postsave(*args,**kwargs):
+def article_postsave(sender, instance, created, *args,**kwargs):
     print("post save: ")
-    print(args, kwargs)
+    # print(args, kwargs)
+    if created:
+        instance.slug ="this is the slug"
+        instance.save()
 
 post_save.connect(article_postsave, sender= Article)
