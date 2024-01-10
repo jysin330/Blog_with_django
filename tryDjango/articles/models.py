@@ -3,11 +3,11 @@ from django.db.models.signals import pre_save, post_save
 # from django.utils import timezone
 from django.utils.text import slugify
 # Create your models here.
-
+import random
 
 class Article(models.Model):
     title = models.CharField(max_length= 70)
-    slug = models.SlugField(null= True, blank = True)
+    slug = models.SlugField(unique =True,null= True, blank = True)
     content = models.TextField()
     timestamp =models.DateTimeField(auto_now_add=True)
     updated = models.DateTimeField(auto_now=True)
@@ -27,11 +27,16 @@ class Article(models.Model):
         # do another something
 
 # SLugify the instance of the Article
-def slugify_instance_title(instance, save= False):
-    slug = slugify(instance.title)
+def slugify_instance_title(instance, save= False, new_slug = None):
+    if new_slug is not None:
+        slug =new_slug
+    else:
+        slug = slugify(instance.title)
     qs = Article.objects.filter(slug = slug).exclude(id =instance.id)
     if qs.exists():
-        slug = f"{slug} - {qs.count()+1}"
+        slug = f"{slug} - {random.randint(300_000,500_000)}"
+        # slug = f"{slug} - {qs.count()+1}"
+        return slugify_instance_title(instance, save=save,new_slug=slug)
     instance.slug = slug
     if save:
         instance.save()

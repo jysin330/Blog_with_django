@@ -12,20 +12,15 @@ def login_view (request):
             user = form.get_user()
             login(request, user)
             return redirect('/')
-            
         # username = request.POST.get('username')
         # password =request.POST.get('password')
         # # remove this
         # print(username, password)
-        
         # user = authenticate(request, username= username, password= password)
-        
         # if user is None:
         #     context ={"error": "invalid username or password"}
         #     return render(request, 'accounts/login.html', context)
-        
         # print(user)
-           
     else:
         form = AuthenticationForm(request )
             
