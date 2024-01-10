@@ -1,9 +1,10 @@
 from django.db import models
 from django.db.models.signals import pre_save, post_save
 # from django.utils import timezone
-from django.utils.text import slugify
+
 # Create your models here.
-import random
+
+from .utils import slugify_instance_title
 
 class Article(models.Model):
     title = models.CharField(max_length= 70)
@@ -25,21 +26,6 @@ class Article(models.Model):
         #     self.save()
         # obj.save()
         # do another something
-
-# SLugify the instance of the Article
-def slugify_instance_title(instance, save= False, new_slug = None):
-    if new_slug is not None:
-        slug =new_slug
-    else:
-        slug = slugify(instance.title)
-    qs = Article.objects.filter(slug = slug).exclude(id =instance.id)
-    if qs.exists():
-        slug = f"{slug} - {random.randint(300_000,500_000)}"
-        # slug = f"{slug} - {qs.count()+1}"
-        return slugify_instance_title(instance, save=save,new_slug=slug)
-    instance.slug = slug
-    if save:
-        instance.save()
 
 def article_presave(sender,instance, *args,**kwargs):
     print("pre save: ")
