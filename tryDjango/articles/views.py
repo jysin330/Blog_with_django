@@ -3,7 +3,7 @@ from django.contrib.auth.decorators import login_required
 # Create your views here.
 from .models import Article
 from .forms import ArticleForm
-
+from django.http import Http404
 def article_search_view(request):
     list_item =Article.objects.all().values_list("slug",flat=True)
     print(list_item)
@@ -67,12 +67,14 @@ def article_create_view(request):
     # return render(request, "articles/create.html", context=context)
 
 
-def article_detail_view(request , id= None):
+def article_detail_view(request , slug= None):
     
     article_obj =None
-    if id is not None:
-        article_obj= Article.objects.get(id = id)
-        
+    if slug is not None:
+        try:
+            article_obj= Article.objects.get(slug = slug)
+        except:
+            raise Http404
     context ={
         "object": article_obj
     }
