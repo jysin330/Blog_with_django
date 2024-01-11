@@ -5,6 +5,7 @@ from .models import Article
 from .forms import ArticleForm
 
 def article_search_view(request):
+   
     query_dict= request.GET #this is dictonary
     # query = query_dict.get('q') # <input type="text" name="q"/>
     try:
