@@ -71,8 +71,13 @@ def article_detail_view(request , slug= None):
     
     article_obj =None
     if slug is not None:
+        
         try:
             article_obj= Article.objects.get(slug = slug)
+        except Article.DoesNotExist:
+            raise Http404
+        except Article.MultipleObjectsReturned:
+            article_obj= Article.objects.filter(slug = slug).first()
         except:
             raise Http404
     context ={
