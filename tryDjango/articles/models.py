@@ -28,7 +28,7 @@ class Article(models.Model):
         # do another something
 
 def article_presave(sender,instance, *args,**kwargs):
-    print("pre save: ")
+    # print("pre save: ")
     # print(sender,instance)
     if instance.slug is None:
         # instance.slug = slugify(instance.title)
@@ -39,7 +39,7 @@ def article_presave(sender,instance, *args,**kwargs):
 pre_save.connect(article_presave, sender= Article)
 
 def article_postsave(sender, instance, created, *args,**kwargs):
-    print("post save: ")
+    # print("post save: ")
     # print(args, kwargs)
     if created:
         slugify_instance_title(instance, save= True)
