@@ -5,8 +5,7 @@ from .models import Article
 from .forms import ArticleForm
 from django.http import Http404
 def article_search_view(request):
-    list_item =Article.objects.all().values_list("slug",flat=True)
-    print(list_item)
+    
     query_dict= request.GET #this is dictonary
     # query = query_dict.get('q') # <input type="text" name="q"/>
     try:
@@ -74,10 +73,10 @@ def article_detail_view(request , slug= None):
         
         try:
             article_obj= Article.objects.get(slug = slug)
-        except Article.DoesNotExist:
-            raise Http404
-        except Article.MultipleObjectsReturned:
-            article_obj= Article.objects.filter(slug = slug).first()
+        # except Article.DoesNotExist:
+        #     raise Http404
+        # except Article.MultipleObjectsReturned:
+        #     article_obj= Article.objects.filter(slug = slug).first()
         except:
             raise Http404
     context ={

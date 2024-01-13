@@ -1,5 +1,5 @@
 from articles.models import Article
-
+from django.shortcuts import render
 # to render html page
 from django.http import HttpResponse
 from django.template.loader import render_to_string
@@ -25,6 +25,7 @@ def home(request):
         "content" : article_obj.content,
         "id": article_obj.id
     }
+    return render(request,'home.html', context= context)
     
     # django templates--->
     
@@ -43,5 +44,5 @@ def home(request):
     # temp_string = tmpl.render(context= context)
     
     # render_to_string method 
-    HTML_string= render_to_string('home.html', context= context)
-    return HttpResponse(HTML_string)
+    # HTML_string= render_to_string('home.html', context= context)
+    # return HttpResponse(HTML_string)
