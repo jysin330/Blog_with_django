@@ -1,4 +1,4 @@
-from django.shortcuts import render
+from django.shortcuts import render,redirect
 from django.contrib.auth.decorators import login_required
 # Create your views here.
 from .models import Article
@@ -37,7 +37,7 @@ def article_create_view(request):
     if form.is_valid():
             article_object = form.save()
             context['form'] = ArticleForm()
-           
+            return redirect("article-detail", slug= article_object.slug)
             # title = form.cleaned_data.get("title")
             # content = form.cleaned_data.get("content")
             # print(title, content)
@@ -73,10 +73,10 @@ def article_detail_view(request , slug= None):
         
         try:
             article_obj= Article.objects.get(slug = slug)
-        # except Article.DoesNotExist:
-        #     raise Http404
-        # except Article.MultipleObjectsReturned:
-        #     article_obj= Article.objects.filter(slug = slug).first()
+        # # except Article.DoesNotExist:
+        # #     raise Http404
+        # # except Article.MultipleObjectsReturned:
+        # #     article_obj= Article.objects.filter(slug = slug).first()
         except:
             raise Http404
     context ={

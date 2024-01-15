@@ -3,7 +3,7 @@ from django.db.models.signals import pre_save, post_save
 # from django.utils import timezone
 from django.urls import reverse
 # Create your models here.
-
+from django.shortcuts import redirect
 from .utils import slugify_instance_title
 
 class Article(models.Model):
@@ -14,12 +14,8 @@ class Article(models.Model):
     updated = models.DateTimeField(auto_now=True)
     # publish =models.DateField(auto_now_add = False, auto_now= False, default = timezone.now)
     publish =models.DateField(auto_now_add = False, auto_now= False, null = True, blank = True)
-
     def get_absolute_url(self):
-        
-        # return reverse('article-create')
-        # return f"/articles/{self.slug}/"
-        return reverse('article-create')
+        pass
 
     def save(self,*args, **kwargs):
         # obj = Article.objects.get(id=1)

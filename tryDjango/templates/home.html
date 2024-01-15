@@ -2,15 +2,17 @@
 
 {% block content %}
     
+<h1>hello world</h1>
+<h1>{{object.title}} (id : {{object.id}})</h1>
+<h1>{{object.content}}</h1>
+<h1><a href="{%url 'article-create'%}">Create Article</a></h1>
 
-<h1>{{object.title}} (id : {{id}})</h1>
-<h1>{{content}}</h1>
 <!-- <p>{{mylist_str}}</p> -->
 {% for x in object_list%}
     {% if x.title%}
    
-    <li><a href="{{x.get_absolute_url}}">{{x.title}} - {{x.content}}</a></li>
-    <!-- <li><a href="/articles/{{x.slug}}">{{x.title}} - {{x.content}}</a></li> -->
+    <!-- <li><a href="{{x.get_absolute_url}}">{{x.title}} - {{x.content}}</a></li> -->
+    <li><a href="/articles/{{x.slug}}">{{x.title}} - {{x.content}}</a></li>
     {%endif%}
 {%endfor%}
 
