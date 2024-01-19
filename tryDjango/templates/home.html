@@ -9,7 +9,7 @@
     {% if x.title%}
    
     <!-- <li><a href="{{x.get_absolute_url}}">{{x.title}} - {{x.content}}</a></li> -->
-    <li><a href="/articles/{{x.slug}}">{{x.title}} - {{x.content}}</a></li>
+    <li><a href="/articles/{{x.slug}}">{{x.title}} - {{x.content}} - {{x.slug}}</a></li>
     {%endif%}
 {%endfor%}
 

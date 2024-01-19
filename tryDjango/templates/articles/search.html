@@ -1,11 +1,16 @@
 {% extends 'base.html' %}
 
 {% block content %}
+{% if object_list %}
+<ol>
 {% for obj in object_list%}
     {% if obj.title%}
-    <h1>{{obj.title}}</h1>
-    <h1>{{obj.content}}</h1>
-
+    <li><a href="/articles/{{obj.slug}}">{{obj.title}}</a></li>
+    
     {%endif%}
 {%endfor%}
+</ol>
+{%else%}
+<p>Not FOund</p>
+{%endif%}
 {% endblock content %}
