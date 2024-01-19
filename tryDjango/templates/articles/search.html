@@ -1,11 +1,11 @@
 {% extends 'base.html' %}
 
 {% block content %}
-    
-{% if object%}
-<h1>{{object.title}}</h1>
-<h1>{{object.content}}</h1>
+{% for obj in object_list%}
+    {% if obj.title%}
+    <h1>{{obj.title}}</h1>
+    <h1>{{obj.content}}</h1>
 
-{%endif%}
-
+    {%endif%}
+{%endfor%}
 {% endblock content %}
