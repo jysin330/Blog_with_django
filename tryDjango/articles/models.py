@@ -5,6 +5,11 @@ from django.urls import reverse
 # Create your models here.
 from django.shortcuts import redirect
 from .utils import slugify_instance_title
+from django.db.models import Q
+class ArticleManager(models.Manager):
+    def search(self,query):
+        lookups = Q(title__icontains=query) | Q(content__icontains=query)
+        return Article.objects.filter(lookups)
 
 class Article(models.Model):
     title = models.CharField(max_length= 70)
@@ -12,8 +17,10 @@ class Article(models.Model):
     content = models.TextField()
     timestamp =models.DateTimeField(auto_now_add=True)
     updated = models.DateTimeField(auto_now=True)
-    # publish =models.DateField(auto_now_add = False, auto_now= False, default = timezone.now)
     publish =models.DateField(auto_now_add = False, auto_now= False, null = True, blank = True)
+
+    objects = ArticleManager()
+
     def get_absolute_url(self):
         pass
 
