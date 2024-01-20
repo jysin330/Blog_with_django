@@ -26,7 +26,6 @@ class Recipe(models.Model):
 class RecipeIngredient(models.Model):
     recipe = models.ForeignKey(Recipe, on_delete= models.CASCADE)
     name =models.CharField(max_length =220)
-    description =models.TextField(blank =True, null = True)
     quantity =models.CharField(max_length =50) # 1, 1/4
     unit = models.CharField(max_length =50) #pounds, lbs, oz, gram ,etc
     description =models.TextField(blank =True, null = True)
