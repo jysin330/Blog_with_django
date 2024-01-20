@@ -1,4 +1,5 @@
 from django.db import models
+from django.db.models.query import QuerySet
 from django.db.models.signals import pre_save, post_save
 # from django.utils import timezone
 from django.urls import reverse
@@ -6,10 +7,25 @@ from django.urls import reverse
 from django.shortcuts import redirect
 from .utils import slugify_instance_title
 from django.db.models import Q
-class ArticleManager(models.Manager):
-    def search(self,query):
+
+class ArticleQuerySet(models.QuerySet):
+    def search(self,query=None):
+        if query is None or query == "":
+            return self.none()
         lookups = Q(title__icontains=query) | Q(content__icontains=query)
-        return Article.objects.filter(lookups)
+        return self.filter(lookups)
+class ArticleManager(models.Manager):
+    def get_queryset(self):
+        return ArticleQuerySet(self.model, using=self._db)
+    
+    def search(self,query=None):
+        return self.get_queryset().search(query=query)
+    # def search(self,query=None):
+    #     if query is None or query == "":
+    #         return self.get_queryset().none()
+    #     lookups = Q(title__icontains=query) | Q(content__icontains=query)
+    #     return self.get_queryset().filter(lookups)
+        # return Article.objects.filter(lookups)
 
 class Article(models.Model):
     title = models.CharField(max_length= 70)

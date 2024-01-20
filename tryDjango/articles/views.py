@@ -5,13 +5,10 @@ from django.contrib.auth.decorators import login_required
 from .models import Article
 from .forms import ArticleForm
 from django.http import Http404
-from django.db.models import Q
+
 def article_search_view(request):
     query= request.GET.get('q')
-    qs =Article.objects.all()
-    if query is not None:
-         lookups =Q(title__icontains=query) | Q(content__icontains=query)
-         qs = Article.objects.search(query)
+    qs = Article.objects.filter(title__icontains= "t").search(query=query)
     context ={
         "object_list": qs
     }
