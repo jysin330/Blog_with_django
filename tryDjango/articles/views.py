@@ -8,7 +8,7 @@ from django.http import Http404
 
 def article_search_view(request):
     query= request.GET.get('q')
-    qs = Article.objects.filter(title__icontains= "t").search(query=query)
+    qs = Article.objects.search(query=query)
     context ={
         "object_list": qs
     }
