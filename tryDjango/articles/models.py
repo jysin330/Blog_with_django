@@ -7,7 +7,9 @@ from django.urls import reverse
 from django.shortcuts import redirect
 from .utils import slugify_instance_title
 from django.db.models import Q
+from django.conf import settings
 
+User = settings.AUTH_USER_MODEL
 class ArticleQuerySet(models.QuerySet):
     def search(self,query=None):
         if query is None or query == "":
@@ -28,6 +30,7 @@ class ArticleManager(models.Manager):
         # return Article.objects.filter(lookups)
 
 class Article(models.Model):
+    user = models.ForeignKey(User, blank =True , null =True , on_delete =models.SET_NULL)
     title = models.CharField(max_length= 70)
     slug = models.SlugField(unique =True,null= True, blank = True)
     content = models.TextField()

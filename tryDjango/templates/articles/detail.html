@@ -5,6 +5,8 @@
 
 <h1>{{object.title}} (id : {{object.id}})</h1>
 <p>{{object.content}}</p>
+<p>Author {{object.user}} {% if request.user == object.user%} This is You!! {% endif %}</p>
+
 <h3><a href="{%url 'article-create'%}">Create Article</a></h3>
 
 {% endblock content %}
