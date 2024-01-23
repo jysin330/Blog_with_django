@@ -41,7 +41,9 @@ class Article(models.Model):
     objects = ArticleManager()
 
     def get_absolute_url(self):
-        pass
+        return reverse("article-detail", kwargs ={"slug": self.slug})
+        # return reverse("article-create")
+        # pass
 
     def save(self,*args, **kwargs):
         # obj = Article.objects.get(id=1)
