@@ -1,10 +1,24 @@
 from django.contrib import admin
 # Register your models here.
+from django.contrib.auth import get_user_model
 from .models import Recipe, RecipeIngredient
+User =get_user_model()
+admin.site.unregister(User)
+class RecipeInline(admin.StackedInline):
+    model = Recipe
+    extra =0
+
+class UserAdmin(admin.ModelAdmin):
+    model = User
+    inlines = [RecipeInline]
+
+admin.site.register(User, UserAdmin)
 class RecipeIngredientInline(admin.StackedInline):
     model = RecipeIngredient
     extra =0
+
     # fields =["name", "quantity", "unit", "directions"]
+
 class RecipeAdmin(admin.ModelAdmin):
     inlines = [RecipeIngredientInline]
     list_display = ["name", "user"]
