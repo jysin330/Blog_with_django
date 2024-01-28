@@ -59,5 +59,24 @@ class RecipeTestCase(TestCase):
     def test_recipe_ingredient_forward_count(self):
         recipe = self.recipe_a
         qs = RecipeIngredient.objects.filter(recipe= recipe)
+        self.assertEqual(qs.count(), 1)
+
+    def test_user_two_level_relation(self):
+        user =self.user_a
+        qs = RecipeIngredient.objects.filter(recipe__user = user)
+        # Three level
+        # qs = RecipeIngredient.objects.filter(recipeingredient__recipe__user = user)
         
+        self.assertEqual(qs.count(), 1)
+
+    def test_user_two_level_relation_reverse(self):
+        user =self.user_a
+        recipeIngredient_ids = list(user.recipe_set.all().values_list('recipeingredient', flat = True))
+        qs = RecipeIngredient.objects.filter(id__in = recipeIngredient_ids)
+        self.assertEqual(qs.count(), 1)
+
+    def test_user_two_level_relation_viq_recipes(self):
+        user =self.user_a
+        ids = user.recipe_set.all().values_list('id', flat = True)
+        qs = RecipeIngredient.objects.filter(recipe__id__in = ids)
         self.assertEqual(qs.count(), 1)
