@@ -5,6 +5,7 @@ from .views import (
     recipe_detail_view,
     recipe_update_view,
 )
+app_name = 'recipes' #recipes:list
 urlpatterns =[
     path("", recipe_list_view, name = 'list'),
     path("create/", recipe_create_view, name = 'create'),

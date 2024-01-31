@@ -13,9 +13,6 @@
     <button style="margin-top: 10px;" type="submit">Create Article</button>
 
 </form>
-{%else%}
 
-<li><a href="/articles/{{object.id}}">{{object.title}} - {{object.content}}</a></li>
-  
 {%endif%}
 {% endblock content %}

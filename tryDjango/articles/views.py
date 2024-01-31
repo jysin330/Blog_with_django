@@ -29,7 +29,7 @@ def article_create_view(request):
     if form.is_valid():
             article_object = form.save()
             context['form'] = ArticleForm()
-            return redirect("article-detail", slug= article_object.slug)
+            return redirect("articles:detail", slug= article_object.slug)
             # title = form.cleaned_data.get("title")
             # content = form.cleaned_data.get("content")
             # print(title, content)
