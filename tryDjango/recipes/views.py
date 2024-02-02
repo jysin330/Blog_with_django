@@ -39,6 +39,7 @@ def recipe_create_view(request):
 @login_required
 def recipe_update_view(request, id=None):
     obj = get_object_or_404(Recipe,id = id, user = request.user)
+    # form = RecipeForm(request.POST or None, initial={"name": "This is wrong data"})
     form = RecipeForm(request.POST or None, instance=obj)
     context ={
         'form': form,
