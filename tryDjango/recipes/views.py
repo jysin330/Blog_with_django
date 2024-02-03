@@ -48,10 +48,13 @@ def recipe_update_view(request, id=None):
         'object': obj
     }
     if all([form.is_valid(),form_2.is_valid()]):
-        form.save(commit=False)
-        form_2.save(commit=False)
-        print("form" , form.cleaned_data)
-        print("form_2" , form_2.cleaned_data)
+        parent=form.save(commit=False)
+        parent.save()
+        child= form_2.save(commit=False)
+        child.recipe = parent
+        child.save()
+
+        
        
         context['message']= 'Data Saved.'
     return render(request, "recipes/create-update.html", context)
