@@ -3,7 +3,7 @@ from django.shortcuts import render , redirect, get_object_or_404
 # Create your views here.
 from .models import Recipe, RecipeIngredient
 from django.contrib.auth.decorators import login_required
-from .forms import RecipeForm
+from .forms import RecipeForm,RecipeIngredientForm
 @login_required
 def recipe_list_view(request):
     qs = Recipe.objects.filter(user = request.user)
@@ -41,11 +41,17 @@ def recipe_update_view(request, id=None):
     obj = get_object_or_404(Recipe,id = id, user = request.user)
     # form = RecipeForm(request.POST or None, initial={"name": "This is wrong data"})
     form = RecipeForm(request.POST or None, instance=obj)
+    form_2 = RecipeIngredientForm(request.POST or None)
     context ={
         'form': form,
+        'form_2': form_2,
         'object': obj
     }
-    if form.is_valid():
-        form.save()
+    if all([form.is_valid(),form_2.is_valid()]):
+        form.save(commit=False)
+        form_2.save(commit=False)
+        print("form" , form.cleaned_data)
+        print("form_2" , form_2.cleaned_data)
+       
         context['message']= 'Data Saved.'
     return render(request, "recipes/create-update.html", context)
